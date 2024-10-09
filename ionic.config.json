@@ -1,0 +1,7 @@
+{
+  "name": "dispensador-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
