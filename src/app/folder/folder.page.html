@@ -3,19 +3,72 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{ folder }}</ion-title>
+    <ion-title>Inicio</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">{{ folder }}</ion-title>
+      <ion-title size="large">Inicio</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-segment class="ion-margin-vertical" value="{{segmentValue}}" (ionChange)="power($event)">
+    <ion-segment-button value="0">
+      <ion-label>APAGADO</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1">
+      <ion-label>ENCENDIDO</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-list class="ion-margin-vertical">
+    <ion-list-header>
+      <h5>Horarios de Activación</h5>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Inicio</ion-label>
+      <ion-datetime-button datetime="startDate"></ion-datetime-button>
+
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="startDate" (ionChange)="captureStartDateTime($event)"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Finalización</ion-label>
+      <ion-datetime-button datetime="endDate"></ion-datetime-button>
+
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="endDate" (ionChange)="captureEndDateTime($event)"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+    <ion-button expand="full" shape="round" class="ion-margin" (click)="enableDateTimeRange()">Establecer</ion-button>
+
+    <p class="alert" *ngIf="activeAlert">El horario de inicio debe ser menor al de finalización</p>
+  </ion-list>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Inicia:</ion-label>
+      <p>{{ textStartDateTime | date: 'medium' }}</p>
+    </ion-item>
+    <ion-item>
+      <ion-label>Termina:</ion-label>
+      <p>{{ textEndDateTime | date: 'medium' }}</p>
+    </ion-item>
+  </ion-list>
+
+  <ion-list class="ion-margin-vertical">
+    <ion-list-header>
+      <h5>Cantidad de Antibacterial</h5>
+    </ion-list-header>
+    <h6>{{ percentage }}%</h6>
+  </ion-list>
 </ion-content>
