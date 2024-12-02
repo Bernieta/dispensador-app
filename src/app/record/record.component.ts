@@ -52,6 +52,12 @@ import { CommonModule } from '@angular/common';
 export class RecordComponent implements OnInit {
   dateValue: string;
   records: Record[] = [];
+  totalDactActivation: number;
+  totalProxActivation: number;
+  totalActivation: number;
+  totalDactActivationToDay: number;
+  totalProxActivationToDay: number;
+  totalActivationToDay: number;
 
   constructor() {}
 
@@ -76,6 +82,14 @@ export class RecordComponent implements OnInit {
         return;
       }
       const values = Object.values(snap.val()) as Record[];
+      this.totalDactActivation = values.filter(
+        (record) => record.activacion === 0
+      ).length;
+      this.totalProxActivation = values.filter(
+        (record) => record.activacion === 1
+      ).length;
+      this.totalActivation =
+        this.totalDactActivation + this.totalProxActivation;
       this.applyFilter(values);
     });
   }
@@ -98,9 +112,18 @@ export class RecordComponent implements OnInit {
   public applyFilter(array: Record[]) {
     const currentDate = new Date();
     if (!this.dateValue) {
-      this.records = this.filter(array, currentDate);
+      this.records = this.filter(array, currentDate).reverse();
     } else {
-      this.records = this.filter(array, new Date(this.dateValue));
+      this.records = this.filter(array, new Date(this.dateValue)).reverse();
     }
+    this.totalDactActivationToDay = this.records.filter(
+      (record) => record.activacion === 0
+    ).length;
+
+    this.totalProxActivationToDay = this.records.filter(
+      (record) => record.activacion === 1
+    ).length;
+    this.totalActivationToDay =
+      this.totalDactActivationToDay + this.totalProxActivationToDay;
   }
 }

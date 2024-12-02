@@ -67,7 +67,52 @@
 
   <ion-list class="ion-margin-vertical">
     <ion-list-header>
-      <h5>Cantidad de Antibacterial</h5>
+      <h5>Seleccionar sensor</h5>
+    </ion-list-header>
+    <ion-item>
+      <ion-button expand="full" shape="round" (click)="sensorProx([0, 1])">Proximidad</ion-button>
+      <ion-button color="success" slot="end" expand="full" shape="round" (click)="sensorDact([0, 1])">Dactilar</ion-button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        @if (sensorProxValue === 1) {
+          Sensor de proximidad activado
+        }
+        @if (sensorProxValue === 0) {
+          Sensor de proximidad desactivado
+        }
+      </ion-label>
+    </ion-item>
+    <ion-item>     
+      <ion-label>
+        @if (sensorDactValue === 1) {
+          Sensor dactilar activado
+        }
+        @if (sensorDactValue === 0) {
+          Sensor dactilar desactivado
+        }
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list class="ion-margin-vertical">
+    <ion-list-header>
+      <h5>Cantidad de antibacterial para suministrar</h5>
+    </ion-list-header>
+    <ion-item>
+      <ion-range aria-label="Custom range" [min]="1" [max]="2" [value]="rangeValue" [pin]="true" [ticks]="true"
+        [snaps]="true" (ionChange)="range($event)"></ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label>Cantidad:</ion-label>
+      <p>{{rangeValue}}ml</p>
+    </ion-item>
+  </ion-list>
+
+  <ion-list class="ion-margin-vertical">
+    <ion-list-header>
+      <h5>Cantidad de antibacterial</h5>
     </ion-list-header>
     <h6>{{ percentage }}%</h6>
   </ion-list>

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { homeOutline, homeSharp, timeOutline, timeSharp  } from 'ionicons/icons';
+import { homeOutline, homeSharp, timeOutline, timeSharp, logoWhatsapp  } from 'ionicons/icons';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +16,10 @@ export class AppComponent {
   public appPages = [
     { title: 'Inicio', url: '/folder', icon: 'home' },
     { title: 'Historial', url: '/historial', icon: 'time' },
+    { title: 'WhatsApp', url: '/whatsapp', icon: 'logoWhatsapp' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor() {
-    addIcons({ homeOutline, homeSharp, timeOutline, timeSharp });
+    addIcons({ homeOutline, homeSharp, timeOutline, timeSharp, logoWhatsapp });
   }
 }

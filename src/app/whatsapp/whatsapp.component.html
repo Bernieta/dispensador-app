@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>WhatsApp</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">WhatsApp</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list class="ion-margin-vertical">
+    <ion-item>
+      <ion-label>Notificaciones:</ion-label>
+      <p>{{phone}}</p>
+    </ion-item>
+  </ion-list>
+
+  <ion-input #phoneInput label="Ingresa tu WhatsApp" label-placement="floating" fill="outline"
+    placeholder="3003334466"></ion-input>
+    <ion-input class="ion-margin-vertical" #keyInput label="Ingresa tu Key" label-placement="floating" fill="outline"
+    placeholder="99999"></ion-input>
+  <ion-button expand="block" (click)="registerPhone()">Guardar</ion-button>
+
+  <ion-list class="ion-margin-vertical">
+
+    <ion-item *ngFor="let phone of phones">
+      <ion-label>{{phone.num.num}}</ion-label>
+      <div>
+        <ion-button (click)="callPhone(phone.num.num, phone.num.llav)">Notificar</ion-button>
+        <ion-button color="danger" (click)="remove(phone.key)">Eliminar</ion-button>
+      </div>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

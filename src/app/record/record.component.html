@@ -13,8 +13,20 @@
       <ion-title size="large">Historial</ion-title>
     </ion-toolbar>
   </ion-header>
+  
+  <ion-list class="ion-margin-vertical">
+    <ion-item>
+      <ion-label>Total de activaciones por sensor dactilar: {{totalDactActivation}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Total de activaciones por sensor proximidad: {{totalProxActivation}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Total de activaciones: {{totalActivation}}</ion-label>
+    </ion-item>
+  </ion-list>
 
-  <ion-list>
+  <ion-list class="ion-margin-vertical">
     <ion-item>
       <ion-datetime-button datetime="recordDate"></ion-datetime-button>
 
@@ -27,12 +39,28 @@
     </ion-item>
   </ion-list>
 
-  <ion-list *ngFor="let record of records; let count=index">
+  <ion-list class="ion-margin-vertical">
     <ion-item>
-      <ion-label>{{ count + 1 }}</ion-label>
-      <p>{{ record.date | date: 'medium' }}</p>
+      <ion-label>Activaciones del dia por sensor dactilar: {{totalDactActivationToDay}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Activaciones del dia por sensor proximidad: {{totalProxActivationToDay}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Total de activaciones del dia: {{totalActivationToDay}}</ion-label>
     </ion-item>
   </ion-list>
 
- 
+  <ion-list *ngFor="let record of records; let count=index">
+    <ion-item>
+      <ion-label>{{ count + 1 }}</ion-label>
+      <span>
+        <p>{{ record.date | date: 'medium' }}</p>
+        <p *ngIf="record.activacion === 0">Por sensor dactilar</p>
+        <p *ngIf="record.activacion === 1">Por sensor de proximidad</p>
+      </span>
+    </ion-item>
+  </ion-list>
+
+
 </ion-content>

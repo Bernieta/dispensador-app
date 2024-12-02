@@ -16,4 +16,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./record/record.component').then((m) => m.RecordComponent),
   },
+  {
+    path: 'whatsapp',
+    loadComponent: () =>
+      import('./whatsapp/whatsapp.component').then((m) => m.WhatsappComponent),
+  }
 ];

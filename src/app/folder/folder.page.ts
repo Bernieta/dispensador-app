@@ -16,6 +16,7 @@ import {
   IonDatetimeButton,
   IonModal,
   IonButton,
+  IonRange,
 } from '@ionic/angular/standalone';
 import { onValue, ref, set } from 'firebase/database';
 import { database } from '../config/fire';
@@ -44,6 +45,7 @@ import { CommonModule } from '@angular/common';
     IonDatetimeButton,
     IonModal,
     IonButton,
+    IonRange,
   ],
 })
 export class FolderPage implements OnInit {
@@ -54,6 +56,10 @@ export class FolderPage implements OnInit {
   textEndDateTime: string;
   activeAlert: boolean = false;
   percentage: number;
+  rangeValue: number;
+  sensorValue: number;
+  sensorProxValue: number;
+  sensorDactValue: number;
 
   constructor() {}
 
@@ -62,6 +68,10 @@ export class FolderPage implements OnInit {
     this.getStartDateTime();
     this.getEndDateTime();
     this.getPercentage();
+    this.getRange();
+    this.getSensor();
+    this.getSensorProx();
+    this.getSensorDact();
   }
 
   public power(event: Event) {
@@ -81,8 +91,8 @@ export class FolderPage implements OnInit {
   public enableDateTimeRange() {
     if (!this.startDateTime || !this.endDateTime) return;
 
-    if(new Date(this.startDateTime) > new Date(this.endDateTime)) {
-      this.activeAlert = true
+    if (new Date(this.startDateTime) > new Date(this.endDateTime)) {
+      this.activeAlert = true;
       return;
     }
 
@@ -91,6 +101,24 @@ export class FolderPage implements OnInit {
     set(query1, this.startDateTime.replace(':00', ''));
     set(query2, this.endDateTime.replace(':00', ''));
     this.activeAlert = false;
+  }
+
+  public range(event: Event) {
+    const value = (event as CustomEvent).detail.value;
+    const query = ref(database, 'cantidad');
+    set(query, value);
+  }
+
+  public sensorProx(value: number[]) {
+    const query = ref(database, 'proximidad');
+    if (this.sensorProxValue === 1) set(query, value[0]);
+    else set(query, value[1]);
+  }
+
+  public sensorDact(value: number[]) {
+    const query = ref(database, 'dactilar');
+    if (this.sensorDactValue === 1) set(query, value[0]);
+    else set(query, value[1]);
   }
 
   public getPower() {
@@ -125,4 +153,35 @@ export class FolderPage implements OnInit {
     });
   }
 
+  public getRange() {
+    const query = ref(database, 'cantidad');
+    onValue(query, (snap) => {
+      if (!snap.exists()) return;
+      this.rangeValue = snap.val() as number;
+    });
+  }
+
+  public getSensor() {
+    const query = ref(database, 'sensor');
+    onValue(query, (snap) => {
+      if (!snap.exists()) return;
+      this.sensorValue = snap.val() as number;
+    });
+  }
+
+  public getSensorProx() {
+    const query = ref(database, 'proximidad');
+    onValue(query, (snap) => {
+      if (!snap.exists()) return;
+      this.sensorProxValue = snap.val() as number;
+    });
+  }
+
+  public getSensorDact() {
+    const query = ref(database, 'dactilar');
+    onValue(query, (snap) => {
+      if (!snap.exists()) return;
+      this.sensorDactValue = snap.val() as number;
+    });
+  }
 }
